@@ -2,103 +2,91 @@
 
 namespace App\Entity;
 
+use App\Repository\ArticleRepository;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity(repositoryClass=ArticleRepository::class)
+ */
 class Article
 {
     /**
-     * @var string
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
      */
-    private $slug;
+    private $id;
 
     /**
-     * @var string
+     * @ORM\Column(type="string", length=255)
      */
     private $title;
 
     /**
-     * @var string
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
+
+    /**
+     * @ORM\Column(type="text")
      */
     private $content;
 
     /**
-     * @var string
+     * @ORM\Column(type="text")
      */
     private $preview;
 
-    /**
-     * @param string $slug
-     * @param string $title
-     * @param string $content
-     * @param string $preview
-     */
-    public function __construct(string $slug, string $title, string $content, string $preview)
+    public function getId(): ?int
     {
-        $this->slug = $slug;
-        $this->title = $title;
-        $this->content = $content;
-        $this->preview = $preview;
+        return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getSlug(): string
-    {
-        return $this->slug;
-    }
-
-    /**
-     * @param string $slug
-     */
-    public function setSlug(string $slug)
-    {
-        $this->slug = $slug;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    /**
-     * @param string $title
-     */
-    public function setTitle(string $title)
+    public function setTitle(string $title): self
     {
         $this->title = $title;
+
+        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getContent(): string
+    public function getContent(): ?string
     {
         return $this->content;
     }
 
-    /**
-     * @param string $content
-     */
-    public function setContent(string $content)
+    public function setContent(string $content): self
     {
         $this->content = $content;
+
+        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getPreview(): string
+    public function getPreview(): ?string
     {
         return $this->preview;
     }
 
-    /**
-     * @param string $preview
-     */
-    public function setPreview(string $preview)
+    public function setPreview(string $preview): self
     {
         $this->preview = $preview;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
     }
 }

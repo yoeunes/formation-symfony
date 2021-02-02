@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
 use App\Repository\ArticleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,10 +18,10 @@ class ArticleController extends AbstractController
      */
     public function index(): Response
     {
-        $articleRepository = new ArticleRepository();
+        $em = $this->getDoctrine()->getManager();
 
         return $this->render('article/index.html.twig', [
-            'articles' => $articleRepository->getAll(),
+            'articles' => $em->getRepository(Article::class)->findAll(),
         ]);
     }
 
@@ -33,8 +34,9 @@ class ArticleController extends AbstractController
      */
     public function show(string $slug): Response
     {
-        $articleRepository = new ArticleRepository();
-        $article = $articleRepository->getBySlug($slug);
+        $em = $this->getDoctrine()->getManager();
+        $article = $em->getRepository(Article::class)
+            ->findOneBy(['slug' => $slug]);
 
         if (null === $article) {
             throw $this->createNotFoundException('Article Not Found !!!');
